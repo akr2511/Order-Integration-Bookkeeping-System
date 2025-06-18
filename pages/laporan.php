@@ -1,5 +1,5 @@
 <?php
-include '../includes/db.php';
+include '.../includes/db.php';
 
 $bulan = $_GET['bulan'] ?? date('m');
 $tahun = $_GET['tahun'] ?? date('Y');
@@ -16,11 +16,11 @@ $result = $stmt->get_result();
 <head>
   <meta charset="UTF-8" />
   <title>Laporan</title>
-  <link rel="stylesheet" href="../assets/css/style-laporan.css" />
+  <link rel="stylesheet" href=".../assets/css/style-laporan.css" />
 </head>
 <body>
   <div class="sidebar">
-    <div class="logo"><img src="../assets/img/logo.png" alt="logo"></div>
+    <div class="logo"><img src=".../assets/img/logo.png" alt="logo"></div>
     <ul class="menu">
       <li><a href="pesanan.php">Pesanan</a></li>
       <li><a href="saldo.php">Info Saldo</a></li>
