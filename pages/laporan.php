@@ -1,5 +1,5 @@
 <?php
-include '../includes/db.php';
+include '.../includes/db.php';
 
 $bulan = $_GET['bulan'] ?? date('m');
 $tahun = $_GET['tahun'] ?? date('Y');
@@ -16,12 +16,14 @@ $result = $stmt->get_result();
 <head>
   <meta charset="UTF-8" />
   <title>Laporan</title>
-  <link rel="stylesheet" href="../assets/css/style-laporan.css" />
+  <link rel="stylesheet" href=".../assets/css/style-laporan.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
   <div class="sidebar">
-    <div class="logo"><img src="../assets/img/logo.png" alt="logo"></div>
+    <div class="logo"><img src=".../assets/img/logo.png" alt="logo"></div>
     <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
       <li><a href="pesanan.php">Pesanan</a></li>
       <li><a href="saldo.php">Info Saldo</a></li>
       <li class="active">Laporan</li>
@@ -30,7 +32,13 @@ $result = $stmt->get_result();
   </div>
 
   <div class="main">
+    <div class="sidebar-overlay"></div>
     <div class="header">
+      <div class="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
       <h2>TOKO SAYA</h2>
       <div class="profile">Nama Admin<br><small>Admin</small></div>
     </div>
@@ -119,5 +127,34 @@ $result = $stmt->get_result();
 
     </div>
   </div>
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+
+    
+    function toggleSidebar() {
+        sidebar.classList.toggle('active');
+        overlay.classList.toggle('active');
+    }
+
+  
+    if (hamburger) {
+        hamburger.addEventListener('click', toggleSidebar);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', toggleSidebar);
+    }
+    
+});
+</script>
+
+</body>
+</html>
+</body>
+</html>
 </body>
 </html>
