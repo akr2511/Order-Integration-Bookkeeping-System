@@ -25,11 +25,13 @@ if ($result && $result->num_rows > 0) {
     <meta charset="UTF-8" />
     <title>Pemasukan - D’ajib Creative House</title>
     <link rel="stylesheet" href="../assets/css/style-saldo.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   </head>
   <body>
     <div class="sidebar">
       <div class="logo"><img src="../assets/img/logo.png" alt="logo" /></div>
       <ul class="menu">
+        <li><a href="dashboard.html">Dashboard</a></li>
         <li><a href="pesanan.php">Pesanan</a></li>
         <li class="active">Info Saldo</li>
         <li><a href="laporan.php">Laporan</a></li>
@@ -38,7 +40,13 @@ if ($result && $result->num_rows > 0) {
     </div>
 
     <div class="main">
+       <div class="sidebar-overlay"></div>
       <div class="header">
+        <div class="hamburger-menu">
+      <span></span>
+      <span></span>
+      <span></span>
+  </div>
         <h2>TOKO SAYA</h2>
         <div class="profile">Nama Admin<br /><small>Admin</small></div>
       </div>
@@ -122,9 +130,11 @@ if ($result && $result->num_rows > 0) {
       </div>
     </div>
     <script>
-      const toggleLink = document.getElementById('toggle-transaksi');
+  document.addEventListener('DOMContentLoaded', function() {
+    // --- FUNGSI UNTUK TOMBOL "LIHAT SEMUA" ---
+    const toggleLink = document.getElementById('toggle-transaksi');
+    if (toggleLink) {
       let isShowingAll = false;
-
       toggleLink.addEventListener('click', function () {
         const hiddenCards = document.querySelectorAll('.transaksi-card');
         hiddenCards.forEach((card, index) => {
@@ -132,11 +142,46 @@ if ($result && $result->num_rows > 0) {
             card.classList.toggle('hidden');
           }
         });
-
         isShowingAll = !isShowingAll;
         this.textContent = isShowingAll ? 'Sembunyikan transaksi' : 'Lihat semua transaksi';
       });
-    </script>
+    }
+
+    // --- FUNGSI UNTUK SIDEBAR TOGGLE ---
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar'); // 'sidebar' sudah ada di sini
+    const overlay = document.querySelector('.sidebar-overlay');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+
+    if (hamburger) {
+      hamburger.addEventListener('click', toggleSidebar);
+    }
+    if (overlay) {
+      overlay.addEventListener('click', toggleSidebar);
+    }
+
+    // ========================================================
+    // === FUNGSI BARU UNTUK MEMPERBAIKI TINGGI SIDEBAR ===
+    // ========================================================
+    function setSidebarHeight() {
+      if (sidebar) {
+        // Gunakan window.innerHeight yang memberikan tinggi area terlihat secara akurat
+        sidebar.style.height = window.innerHeight + 'px';
+      }
+    }
+
+    // Panggil saat halaman pertama kali dimuat
+    setSidebarHeight();
+
+    // Panggil lagi saat ukuran jendela berubah (misal: rotasi ponsel atau address bar hilang)
+    window.addEventListener('resize', setSidebarHeight);
+    // ========================================================
+  });
+</script>
 
   </body>
 </html>
