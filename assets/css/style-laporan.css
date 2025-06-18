@@ -1,3 +1,4 @@
+/* === BAGIAN ASLI (DENGAN SEDIKIT PENYESUAIAN) === */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -9,6 +10,7 @@ body {
   display: flex;
   height: 100vh;
   background-color: #f5f5f5;
+  overflow-x: hidden; /* Mencegah scroll horizontal yang tidak diinginkan */
 }
 
 .sidebar {
@@ -17,10 +19,14 @@ body {
   color: white;
   height: 100vh;
   padding: 20px 0;
-  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: fixed; /* Membuat sidebar tetap di tempat */
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  transition: transform 0.3s ease-in-out;
 }
 
 .sidebar .logo {
@@ -57,6 +63,7 @@ body {
 .menu li a {
   color: white;
   text-decoration: none;
+  display: block; /* Agar link memenuhi area li */
 }
 
 .logout {
@@ -71,14 +78,16 @@ body {
 .logout:hover {
   color: #00aaff;
 }
-/* Main Area */
+
 .main {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  margin-left: 220px; /* Memberi ruang untuk sidebar */
+  width: calc(100% - 220px); /* Mengisi sisa ruang */
+  transition: margin-left 0.3s ease-in-out;
 }
 
-/* Header */
 .header {
   background: linear-gradient(to right, #2874f0, #00aaff);
   color: white;
@@ -92,68 +101,14 @@ body {
   margin-right: 20px;
 }
 
-/* Header 2 (Tabs bar di bawah header utama) */
-.header2 {
-  background: linear-gradient(to right, #639ffe, #00aaff);
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  gap: 10px;
-  border-bottom: 1px solid #ccc;
-}
-
-.header2 button {
-  background-color: transparent;
-  color: #ffffff;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.header2 button:hover {
-  background-color: #3b6cb7;
-}
-
-.header2 button.active {
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 20px;
-}
-
-.tabs {
-  display: flex;
-  gap: 10px;
-}
-
-.tabs button {
-  background: white;
-  color: #2874f0;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.tabs button:hover {
-  background: #e6f0ff;
-}
-
 .profile {
   text-align: right;
   font-size: 14px;
 }
 
-/* Content */
 .content {
   padding: 20px 30px;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
 }
 
 .content h3 {
@@ -161,200 +116,6 @@ body {
   font-size: 18px;
   font-weight: bold;
   color: #333;
-}
-
-/* Order Cards */
-.order-card {
-  background-color: white;
-  padding: 15px 20px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease;
-}
-
-.order-card:hover {
-  transform: translateY(-5px);
-}
-
-.product-photo {
-  width: 70px;
-  height: 70px;
-  flex-shrink: 0;
-  background-color: #eee;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  overflow: hidden;
-  position: relative; /* Dibutuhkan agar overlay bisa diposisikan */
-}
-
-.product-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-/* Tambahan untuk overlay upload */
-.upload-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: 0.3s ease;
-  cursor: pointer;
-}
-
-.product-photo:hover .upload-overlay {
-  opacity: 1;
-}
-
-.upload-overlay input[type="file"] {
-  display: none;
-}
-
-.order-detail {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.order-detail strong {
-  font-weight: 600;
-  color: #222;
-}
-
-.order-info {
-  flex: 1.5;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  color: #333;
-  font-size: 14px;
-}
-
-.buyer-note {
-  max-width: 250px;
-  width: 100%;
-  word-wrap: break-word;
-  font-size: 0.9em;
-  color: #444;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.buyer-note .note-title {
-  text-align: center;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  color: #2874f0; 
-}
-
-.buyer-note .note-content {
-  margin: 0;
-  padding: 0;
-}
-
-.status {
-  flex: 1;
-  text-align: center;
-  font-weight: 600;
-  text-transform: capitalize;
-  color: #2874f0;
-}
-
-.platform {
-  flex: 0.5;
-  text-align: center;
-}
-
-.platform img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-}
-
-/* Judul informasi saldo */
-.content h3 {
-  font-size: 1.5em;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* Kotak saldo */
-.saldo {
-  font-size: 1.8em;
-  font-weight: bold;
-  color: #2e8b57;
-  background-color: #e0f7e9;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Judul transaksi */
-.content h4 {
-  font-size: 1.2em;
-  color: #444;
-  margin-bottom: 8px;
-}
-
-/* Transaksi terakhir */
-.transaksi {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  min-height: 40px;
-}
-
-/* Tautan tampil semua transaksi */
-.show-more {
-  display: inline-block;
-  background-color: #007bff;
-  color: white;
-  padding: 10px 18px;
-  text-decoration: none;
-  border-radius: 6px;
-  transition: background-color 0.3s ease;
-}
-
-.show-more:hover {
-  background-color: #0056b3;
-}
-
-.btn-unduh {
-  background-color: #007bff;
-  color: white;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.btn-unduh:hover {
-  background-color: #0056b3;
 }
 
 .filter-bar {
@@ -394,6 +155,10 @@ body {
   background-color: #1c5fd1;
 }
 
+.laporan-wrapper {
+  overflow-x: auto; /* Untuk desktop jika tabel masih terlalu lebar */
+}
+
 .laporan-table {
   width: 100%;
   border-collapse: collapse;
@@ -425,20 +190,10 @@ body {
   background-color: #f1f1f1;
 }
 
-.laporan-table tfoot {
-  font-weight: bold;
-  background-color: #f0f0f0;
-}
-
-.laporan-table tfoot {
-  font-weight: bold;
-  background-color: #f0f0f0;
-}
-
 .laporan-summary {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 20px;
   margin-top: 25px;
   flex-wrap: wrap;
   font-weight: bold;
@@ -452,20 +207,92 @@ body {
   min-width: 200px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  flex-grow: 1; /* Agar item mengisi ruang */
 }
 
-.summary-item .label {
+.btn-unduh {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-unduh:hover {
+  background-color: #0056b3;
+}
+
+/* Tombol Hamburger (Awalnya tersembunyi di desktop) */
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger-menu span {
   display: block;
-  font-size: 14px;
-  color: #0077cc;
-  margin-bottom: 5px;
+  width: 25px;
+  height: 3px;
+  margin: 5px 0;
+  background-color: white;
+  transition: 0.3s;
 }
 
-.summary-item .value {
-  font-size: 16px;
-  color: #222;
+/* Overlay (Awalnya tersembunyi) */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 
+.sidebar-overlay.active {
+    display: block;
+}
 
+/* === BAGIAN RESPONSIVE (MEDIA QUERIES) === */
+/* Aturan untuk Tablet dan Ponsel (Layar di bawah 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%); /* Sembunyikan sidebar ke kiri */
+  }
 
+  .sidebar.active {
+      transform: translateX(0); /* Tampilkan sidebar saat aktif */
+  }
 
+  .main {
+    margin-left: 0; /* Main content mengisi seluruh layar */
+    width: 100%;
+  }
+  
+  .header {
+      justify-content: start; /* Mengatur item dari kiri */
+      gap: 15px;
+  }
+  
+  .header h2 {
+      order: 2; /* Mengubah urutan agar hamburger di paling kiri */
+      margin-right: auto; /* Mendorong profile ke kanan */
+  }
+
+  .profile {
+      order: 3;
+  }
+  
+  .hamburger-menu {
+    display: block; /* Tampilkan tombol hamburger */
+    order: 1;
+  }
+  
+  .content {
+      padding: 15px; /* Kurangi padding di mobile */
+  }
+}
