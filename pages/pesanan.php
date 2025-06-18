@@ -1,5 +1,5 @@
 <?php
-require_once "../includes/db.php";
+require_once ".../includes/db.php";
 // Ambil semua pesanan
 $sql = "SELECT * FROM orders ORDER BY order_date ASC";
 $result = $conn->query($sql);
@@ -31,13 +31,14 @@ function mapStatus($status) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pesanan - D’ajib Creative House</title>
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href=".../assets/css/style.css" />
 </head>
 
 <body>
   <div class="sidebar">
-    <div class="logo"><img src="../assets/img/logo.png" alt="logo" /></div>
+    <div class="logo"><img src=".../assets/img/logo.png" alt="logo" /></div>
     <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
       <li class="active">Pesanan</li>
       <li><a href="saldo.php">Info Saldo</a></li>
       <li><a href="laporan.php">Laporan</a></li>
@@ -46,7 +47,13 @@ function mapStatus($status) {
   </div>
 
   <div class="main">
+    <div class="sidebar-overlay"></div>
     <div class="header">
+      <div class="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
       <h2>TOKO SAYA</h2>
       <div class="tabs"></div>
       <div class="profile">Nama Admin<br /><small>Admin</small></div>
@@ -113,9 +120,9 @@ function mapStatus($status) {
         <div class="platform">
           <img
             src="<?php
-              echo $row['platform'] === 'shopee' ? '../assets/img/shopee.png' :
-                   ($row['platform'] === 'tokopedia' ? '../assets/img/tokopedia.png' :
-                   ($row['platform'] === 'tiktok_shop' ? '../assets/img/tiktok.png' : '../assets/img/unknown.png'));
+              echo $row['platform'] === 'shopee' ? '.../assets/img/shopee.png' :
+                  ($row['platform'] === 'tokopedia' ? '../assets/img/tokopedia.png' :
+                  ($row['platform'] === 'tiktok_shop' ? '../assets/img/tiktok.png' : '../assets/img/unknown.png'));
             ?>"
             alt="<?php echo htmlspecialchars($row['platform']); ?>"
           />
@@ -125,12 +132,23 @@ function mapStatus($status) {
     </div>
   </div>
 
-  <script>
-    // Fungsi untuk memfilter kartu berdasarkan status
-    function filterStatus(status) {
+ <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // --- FUNGSI UNTUK SIDEBAR ---
+    const hamburger = document.querySelector('.hamburger-menu');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.sidebar-overlay');
+    function toggleSidebar() {
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+    if (hamburger) hamburger.addEventListener('click', toggleSidebar);
+    if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+    // --- FUNGSI UNTUK FILTER STATUS PESANAN ---
+    window.filterStatus = function(status) {
       const cards = document.querySelectorAll(".order-card");
       let visibleCount = 0;
-
       cards.forEach((card) => {
         const cardStatus = card.getAttribute("data-status");
         if (status === "semua" || cardStatus === status) {
@@ -140,10 +158,7 @@ function mapStatus($status) {
           card.style.display = "none";
         }
       });
-
-      document.getElementById("total-paket").textContent =
-        visibleCount + " Paket";
-
+      document.getElementById("total-paket").textContent = visibleCount + " Paket";
       document.querySelectorAll('.header2 button').forEach(btn => {
         btn.classList.remove('active');
         if (btn.dataset.status === status) {
@@ -151,11 +166,9 @@ function mapStatus($status) {
         }
       });
     }
-
     // Filter default saat halaman dimuat
-    window.addEventListener('DOMContentLoaded', function () {
-      filterStatus('siap kirim');
-    });
-  </script>
+    filterStatus('siap kirim');
+  });
+</script>
 </body>
 </html>
